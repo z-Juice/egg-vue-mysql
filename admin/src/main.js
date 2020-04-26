@@ -1,43 +1,31 @@
-import Vue from 'vue'
+import Vue from "vue"
+import App from "@/App.vue"
+import router from "@/router"
+import store from "@/store"
+import "@/registerServiceWorker"
 
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
+//引入element UI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+Vue.use(ElementUI)
 
-import '@/styles/index.scss' // global css
+//国际化
+import i18n from './i18n/i18n'
 
-import App from './App'
-import store from './store'
-import router from './router'
+//引入全局样式
+import 'normalize.css/normalize.css'
+import '@/assets/less/style.less'
 
-import '@/icons' // icon
-import '@/permission' // permission control
+//引入路由守卫配置
+import '@/permission'
 
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online ! ! !
- */
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+i18n.locale = 'cn'
 
-// set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
-// 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
-
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
-  el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
-})
+}).$mount("#app");
